@@ -9,7 +9,7 @@ import './Cart.css'
 
 function Cart(props) {
 
-    const [amount, setamount] = useState('')
+    
     const { item,setitem,userdata } = useContext(Mycontext)
     
     const [user, setusers] = useState({orderid:"",email:''})
@@ -59,7 +59,7 @@ function Cart(props) {
    const handler=(e)=>{
        const{name,value}=e.target;
        setusers({...user,[name]:value})
-       console.log(user)
+       
 
    }
 
@@ -78,19 +78,17 @@ function Cart(props) {
                         user.orderid=res.data.orderid
                         user.email=userdata.email
                         setusers({...user})
-                        console.log(user)
                              //signature verification and creating the customer record            
                          if (res) {
                             axios.post(addorders, user)
                                .then(res => {
-                                console.log(res)
                                    if(res){
                                      window.location.href='/myorder'  
                                    }
                                  
                                 })
                                .catch(error => {
-                                   console.log( error)
+                                   return( error)
                               })
                        }
 
@@ -112,12 +110,9 @@ function Cart(props) {
         const rzp1 = new window.Razorpay(options);
         rzp1.open();
     }
-    const handlepayment = (e) => {
-        
-        e.preventDefault()
-        axios.post(payment, { amount: amount })
+    const handlepayment = () => {
+        axios.post(payment, { amount: total })
             .then(res => {
-                console.log(res)
                 const{order}=res.data
                 handleRazorpay(order)
             })
@@ -176,7 +171,7 @@ function Cart(props) {
                                 <label style={{color:'grey'}}>Delivery Address</label>
                                  <textarea onChange={handler} name='address'></textarea>
                             </div>
-                            <button className='btn btn-warning w-100 font-weight-bold' onClick={(e) => handlepayment(e, setamount(total))} style={{color:'white',fontSize:'1.2rem'}}>Place order</button>
+                            <button className='btn btn-warning w-100 font-weight-bold' onClick={() => handlepayment()} style={{color:'white',fontSize:'1.2rem'}}>Place order</button>
                              </div>
                         </div>
                 </div>
