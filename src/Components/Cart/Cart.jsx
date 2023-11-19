@@ -12,7 +12,7 @@ function Cart(props) {
     
     const { item,setitem,userdata } = useContext(Mycontext)
     
-    const [user, setusers] = useState({orderid:"",email:''})
+    const [user, setusers] = useState({orderid:"",address:"",email:''})
 
 
     //increase quantity
@@ -111,6 +111,10 @@ function Cart(props) {
         rzp1.open();
     }
     const handlepayment = () => {
+         if(user.address===""){
+                 alert('Please add delivery address')
+        }
+          else{
         axios.post(payment, { amount: total })
             .then(res => {
                 const{order}=res.data
@@ -119,7 +123,7 @@ function Cart(props) {
             .catch(error => {
                 return (error)
             })
-    }
+    }}
     return (
             <div className='container'>
                 <div className='row mt-2'>
