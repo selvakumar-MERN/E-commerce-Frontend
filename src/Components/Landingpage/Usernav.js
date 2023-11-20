@@ -46,11 +46,7 @@ function Usernav(props) {
                                 </Link>
                             </li>
 
-                            <li className="nav-item mx-3">
-                                <Link to='/products'
-                                    className="nav-link" >Products
-                                </Link>
-                            </li>
+                            
                             <li className="mx-3">
                                  <Link to='/login'
                                     className="nav-link text-black"><FaUserCircle className='mx-1'/>Login
